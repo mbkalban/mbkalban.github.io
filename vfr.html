@@ -15,18 +15,10 @@
       width: 300px;
       margin: auto;
     }
-    #model-image {
+    #model-video {
       width: 100%;
       position: relative;
       z-index: 1;
-    }
-    #clothing-overlay {
-      width: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 2;
-      display: none;
     }
     #clothing-options button {
       margin: 5px;
@@ -42,40 +34,34 @@
 <body>
 
 <h2>Try Before You Buy - Virtual Fitting Room</h2>
-<p>Select an item to try on the model. Click again to remove it.</p>
+<p>Select an item to see it on the model. Click "Reset" to return to the main view.</p>
 
 <div id="fitting-room">
-  <!-- Model Image -->
-  <img id="model-image" src="model.jfif" alt="Model">
-  <!-- Clothing Overlay -->
-  <img id="clothing-overlay" src="" alt="Clothing Overlay">
+  <!-- Model Video -->
+  <video id="model-video" src="Pouria-model.mp4" muted></video>
 </div>
 
 <!-- Clothing Selection Buttons -->
 <div id="clothing-options">
-  <button onclick="toggleClothing('https://assets.burberry.com/is/image/Burberryltd/C6E2F3EC-ADE9-4A8C-B276-3367FE97D98A?$BBY_V3_SL_1$&wid=1501&hei=1500')">Try Dress 1</button>
-  <button onclick="toggleClothing('https://example.com/dress2.png')">Try Dress 2</button>
-  <button onclick="toggleClothing('https://example.com/shirt1.png')">Try Shirt 1</button>
+  <button onclick="goToTime(1)">Try Shirt 1</button>
+  <button onclick="goToTime(3)">Try Shirt 2</button>
+  <button onclick="goToTime(6)">Try Shirt 3</button>
+  <button onclick="goToTime(8)">Try Shirt 4</button>
+  <button onclick="goToTime(11)">Try Shirt 5</button>
+  <button onclick="resetView()">Reset to Model</button>
 </div>
 
 <script>
-  // Store the currently displayed clothing URL
-  let currentClothing = null;
+  const modelVideo = document.getElementById('model-video');
 
-  function toggleClothing(clothingImageUrl) {
-    const clothingOverlay = document.getElementById('clothing-overlay');
+  function goToTime(time) {
+    // Set video time to the specific timestamp for each shirt
+    modelVideo.currentTime = time;
+  }
 
-    // Check if the clicked clothing is already displayed
-    if (currentClothing === clothingImageUrl) {
-      // If it's the same, hide it and clear currentClothing
-      clothingOverlay.style.display = 'none';
-      currentClothing = null;
-    } else {
-      // Otherwise, display the new clothing
-      clothingOverlay.src = clothingImageUrl;
-      clothingOverlay.style.display = 'block';
-      currentClothing = clothingImageUrl; // Update the currentClothing
-    }
+  function resetView() {
+    // Reset to 0-second mark for main model view
+    modelVideo.currentTime = 0;
   }
 </script>
 
