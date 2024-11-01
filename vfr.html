@@ -15,11 +15,18 @@
       width: 300px;
       margin: auto;
     }
-    #model-image, #clothing-overlay {
+    #model-image {
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+    #clothing-overlay {
       width: 100%;
       position: absolute;
       top: 0;
       left: 0;
+      z-index: 2;
+      display: none;
     }
     #clothing-options button {
       margin: 5px;
@@ -35,28 +42,40 @@
 <body>
 
 <h2>Try Before You Buy - Virtual Fitting Room</h2>
-<p>Select an item to try on the model.</p>
+<p>Select an item to try on the model. Click again to remove it.</p>
 
 <div id="fitting-room">
   <!-- Model Image -->
-  <img id="model-image" src="https://example.com/model.jpg" alt="Model">
+  <img id="model-image" src="model.jfif" alt="Model">
   <!-- Clothing Overlay -->
-  <img id="clothing-overlay" src="" alt="Clothing Overlay" style="display: none;">
+  <img id="clothing-overlay" src="" alt="Clothing Overlay">
 </div>
 
 <!-- Clothing Selection Buttons -->
 <div id="clothing-options">
-  <button onclick="tryClothing('https://example.com/dress1.png')">Try Dress 1</button>
-  <button onclick="tryClothing('https://example.com/dress2.png')">Try Dress 2</button>
-  <button onclick="tryClothing('https://example.com/shirt1.png')">Try Shirt 1</button>
+  <button onclick="toggleClothing('https://assets.burberry.com/is/image/Burberryltd/C6E2F3EC-ADE9-4A8C-B276-3367FE97D98A?$BBY_V3_SL_1$&wid=1501&hei=1500')">Try Dress 1</button>
+  <button onclick="toggleClothing('https://example.com/dress2.png')">Try Dress 2</button>
+  <button onclick="toggleClothing('https://example.com/shirt1.png')">Try Shirt 1</button>
 </div>
 
 <script>
-  // Function to overlay clothing on the model
-  function tryClothing(clothingImageUrl) {
+  // Store the currently displayed clothing URL
+  let currentClothing = null;
+
+  function toggleClothing(clothingImageUrl) {
     const clothingOverlay = document.getElementById('clothing-overlay');
-    clothingOverlay.src = clothingImageUrl;
-    clothingOverlay.style.display = 'block';
+
+    // Check if the clicked clothing is already displayed
+    if (currentClothing === clothingImageUrl) {
+      // If it's the same, hide it and clear currentClothing
+      clothingOverlay.style.display = 'none';
+      currentClothing = null;
+    } else {
+      // Otherwise, display the new clothing
+      clothingOverlay.src = clothingImageUrl;
+      clothingOverlay.style.display = 'block';
+      currentClothing = clothingImageUrl; // Update the currentClothing
+    }
   }
 </script>
 
