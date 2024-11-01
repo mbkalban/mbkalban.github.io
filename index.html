@@ -54,12 +54,17 @@
 </div>
 
 <script>
+  let userLocation = null; // Variable to hold the user's location
+
   function notifyDriver() {
     // Show notification message
     alert("A driver is nearby and has been notified to pick up your item for return!");
-    
+
     // Display the "Open Map" button
     document.getElementById('open-map-button').style.display = 'inline-block';
+
+    // Get user location
+    getUserLocation();
   }
 
   function showMap() {
@@ -67,12 +72,33 @@
     document.getElementById('map-container').style.display = 'block';
   }
 
-  function calculateDistance() {
-    // Coordinates for a sample driver location and user location
-    const driverLocation = { lat: 25.301976, lng: 55.505115 };
-    const userLocation = { lat: 25.310181159590925, lng: 55.493398657183704 };
+  function getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        userLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        console.log("User location:", userLocation);
+      }, error => {
+        console.error("Error getting location:", error);
+        alert("Unable to retrieve your location.");
+      });
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
 
-    // Calculate the distance (mock example)
+  function calculateDistance() {
+    if (!userLocation) {
+      alert("User location is not available. Please try again.");
+      return;
+    }
+
+    // Coordinates for a sample driver location
+    const driverLocation = { lat: 25.301976, lng: 55.505115 };
+
+    // Calculate the distance
     const distance = getDistanceFromLatLonInKm(driverLocation.lat, driverLocation.lng, userLocation.lat, userLocation.lng);
     
     alert(`The driver is approximately ${distance.toFixed(2)} km away from you!`);
