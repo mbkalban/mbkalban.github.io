@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Fitting Room Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 20px;
+    }
+    #fitting-room {
+      position: relative;
+      width: 300px;
+      margin: auto;
+    }
+    #model-image, #clothing-overlay {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    #clothing-options button {
+      margin: 5px;
+      padding: 10px;
+      background-color: #ff6a00;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Try Before You Buy - Virtual Fitting Room</h2>
+<p>Select an item to try on the model.</p>
+
+<div id="fitting-room">
+  <!-- Model Image -->
+  <img id="model-image" src="https://example.com/model.jpg" alt="Model">
+  <!-- Clothing Overlay -->
+  <img id="clothing-overlay" src="" alt="Clothing Overlay" style="display: none;">
+</div>
+
+<!-- Clothing Selection Buttons -->
+<div id="clothing-options">
+  <button onclick="tryClothing('https://example.com/dress1.png')">Try Dress 1</button>
+  <button onclick="tryClothing('https://example.com/dress2.png')">Try Dress 2</button>
+  <button onclick="tryClothing('https://example.com/shirt1.png')">Try Shirt 1</button>
+</div>
+
+<script>
+  // Function to overlay clothing on the model
+  function tryClothing(clothingImageUrl) {
+    const clothingOverlay = document.getElementById('clothing-overlay');
+    clothingOverlay.src = clothingImageUrl;
+    clothingOverlay.style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
